@@ -1,0 +1,65 @@
+Test pairs: 64,094 (rated for severity: 26,031, major: 5,356)
+Safety thresholds: interaction 0.186, major 0.255
+
+################ DEFAULT (50% cut-off) ################
+=== Interaction detection ===
+Accuracy: 0.849
+F1:       0.854
+
+=== Severity (Minor / Moderate / Major) ===
+Accuracy:          0.832
+Macro F1:          0.743
+Baseline accuracy: 0.741  (always guessing 'Moderate')
+
+              precision    recall  f1-score   support
+
+       Minor      0.487     0.768     0.596      1391
+    Moderate      0.945     0.831     0.884     19284
+       Major      0.665     0.855     0.748      5356
+
+    accuracy                          0.832     26031
+   macro avg      0.699     0.818     0.743     26031
+weighted avg      0.863     0.832     0.841     26031
+
+Confusion matrix (rows = true, columns = predicted):
+               Minor  Moderate     Major
+     Minor      1068       249        74
+  Moderate      1030     16017      2237
+     Major        95       682      4579
+
+=== Missed major interactions ===
+Called 'no interaction':            409 of 5,356
+Not flagged as Major (any reason):  1,055 of 5,356
+
+################ SAFETY THRESHOLDS ################
+=== Interaction detection ===
+Accuracy: 0.781
+F1:       0.816
+
+=== Severity (Minor / Moderate / Major) ===
+Accuracy:          0.778
+Macro F1:          0.707
+Baseline accuracy: 0.741  (always guessing 'Moderate')
+
+              precision    recall  f1-score   support
+
+       Minor      0.501     0.751     0.601      1391
+    Moderate      0.962     0.739     0.836     19284
+       Major      0.543     0.926     0.685      5356
+
+    accuracy                          0.778     26031
+   macro avg      0.669     0.806     0.707     26031
+weighted avg      0.852     0.778     0.792     26031
+
+Confusion matrix (rows = true, columns = predicted):
+               Minor  Moderate     Major
+     Minor      1045       226       120
+  Moderate       974     14254      4056
+     Major        65       330      4961
+
+=== Missed major interactions ===
+Called 'no interaction':            133 of 5,356
+Not flagged as Major (any reason):  514 of 5,356
+
+Note: in the app, pairs already listed in DDInter are looked up directly.
+These scores measure how well the model predicts pairs NOT in the data.
