@@ -23,6 +23,7 @@ from model.decision import interaction_proba, predict_severity
 
 MODEL_PATH = Path("models/medcheck.pkl")
 INTERACTIONS_PATH = Path("data/processed/interactions.csv")
+EFFECTS_PATH = Path("data/processed/effects.csv")  # optional, from prepare_effects.py
 
 
 @lru_cache(maxsize=1)
@@ -38,11 +39,42 @@ def load():
     return art, lookup, NameMatcher(names)
 
 
+@lru_cache(maxsize=1)
+def load_effects() -> dict:
+    if not EFFECTS_PATH.exists():
+        return {}
+    ef = pd.read_csv(EFFECTS_PATH)
+    return {
+        (a, b): e.split("; ")
+        for a, b, e in zip(ef["DDInterID_A"], ef["DDInterID_B"], ef["effects"])
+    }
+
+
 def get_matcher() -> NameMatcher:
     return load()[2]
 
 
 def predict(drug_a: str, drug_b: str) -> dict:
+    result = _predict(drug_a, drug_b)
+    if result["status"] == "ok":
+        effects = load_effects().get(result.pop("_ids"))
+        if effects:
+            result["effects"] = effects
+            result["effects_source"] = "DrugBank"
+            # Not in DDInter but listed in DrugBank: a second source confirms it.
+            if result["source"] == "model":
+                result["interaction"] = True
+                result["source"] = "DrugBank"
+                if "estimated_severity" not in result:
+                    art = load()[0]
+                    X = np.array([art["stats"].pair_features(*result["_pair"])])
+                    result["estimated_severity"] = str(predict_severity(art, X)[0])
+        result.pop("_ids", None)
+        result.pop("_pair", None)
+    return result
+
+
+def _predict(drug_a: str, drug_b: str) -> dict:
     art, lookup, matcher = load()
     a, b = matcher.match(drug_a), matcher.match(drug_b)
 
@@ -53,7 +85,10 @@ def predict(drug_a: str, drug_b: str) -> dict:
         return {"status": "same_drug", "drug_a": a[1], "drug_b": b[1]}
 
     (id_a, name_a), (id_b, name_b) = sorted([a, b])
-    result = {"status": "ok", "drug_a": name_a, "drug_b": name_b}
+    result = {
+        "status": "ok", "drug_a": name_a, "drug_b": name_b,
+        "_ids": (id_a, id_b), "_pair": (id_a, id_b),
+    }
     X = np.array([art["stats"].pair_features(id_a, id_b)])
     level = lookup.get((id_a, id_b))
 
