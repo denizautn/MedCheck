@@ -76,8 +76,8 @@ Missed major interactions matter most: a false alarm costs a question to a pharm
 | Name | Role | Builds | Writes | Presents |
 | --- | --- | --- | --- | --- |
 | Deniz | Data & Model | Dataset cleaning, interaction + severity model, model tests | Data and model; How we tested it | How it works; Results |
-| Kunsh | Chatbot & Interface | LLM connection, drug name extraction, plain-language answers, web interface | Chatbot part; Limits and next steps | Hook and problem; Live demo |
-| Kaustubh | Name Matching, Integration & Testing | Name matcher, model-to-chatbot connection, hand-checked test list | Problem; What we predict; build log | Team and what's next; backup demo video |
+| Deniz | Chatbot & Interface | LLM connection, drug name extraction, plain-language answers, web interface | Chatbot part; Limits and next steps | Hook and problem; Live demo |
+| Deniz | Name Matching, Integration & Testing | Name matcher, model-to-chatbot connection, hand-checked test list | Problem; What we predict; build log | Team and what's next; backup demo video |
 
 Shared: agree on the model's input and output on day one, read the final manuscript together, and everyone tests the demo before the final day.
 
