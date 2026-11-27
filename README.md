@@ -52,7 +52,7 @@ Baseline (always guessing "moderate"): 74.1% severity accuracy, about 0.28 macro
 
 ### Compared with ChatGPT
 
-We picked 30 random pairs from the test set (fixed seed: 10 major, 5 moderate, 5 minor, 10 listed in no database) and asked ChatGPT for each severity, in one message.
+I have picked 30 random pairs from the test set (fixed seed: 10 major, 5 moderate, 5 minor, 10 listed in no database) and asked ChatGPT for each severity, in one message.
 
 | On the 20 pairs listed in DDInter | ChatGPT | MedCheck |
 | --- | --- | --- |
@@ -147,4 +147,4 @@ MedCheck is a non-commercial student project.
 | --- | --- |
 | Deniz | Data, model, app and testing |
 
-Built with help from Claude (Anthropic) for code and writing.
+Built with help from Claude for code and double checking.
