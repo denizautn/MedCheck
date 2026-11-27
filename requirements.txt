@@ -1,21 +1,11 @@
-# Data and model (Deniz)
+# Data and model
 pandas>=2.2
 numpy>=1.26
 scikit-learn>=1.5
 joblib>=1.4
 
-# Name matching (Kaustubh)
+# Drug name matching
 rapidfuzz>=3.9
 
-# Chatbot (Kunsh) - keep the line for the LLM you choose, delete the other
-anthropic>=0.40
-# openai>=1.50
-
-# Interface (Kunsh)
+# Interface
 streamlit>=1.40
-
-# API keys from .env
-python-dotenv>=1.0
-
-# Testing (Kaustubh)
-pytest>=8.0
